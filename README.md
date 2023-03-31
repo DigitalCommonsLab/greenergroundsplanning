@@ -4,5 +4,10 @@ Greener Grounds Planning is an analisys tool designed to identify and analyze ar
 The tool assess the ecological impact of planting trees in specific locations.<br/>By analyzing factors such as soil type, rainfall patterns, and sunlight exposure, pollution, species of trees.<br/> 
 Greener Grounds Planning ensures that all planting projects are optimized for long-term success and maximum environmental benefit.
 
+- calculation of the eco-benefit value of trees
+- intersection of data with indicators on benefits
+- identification of deficiencies to propose planting
+- representation on map of the results
+
 ![](images/OIG.jpeg)
 
