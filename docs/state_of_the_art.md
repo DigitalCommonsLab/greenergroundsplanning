@@ -44,6 +44,11 @@ MaTREEd is developed using the following datasets:
   - URL: [page](https://www.researchgate.net/publication/257671000_Urban_forest_structure_ecosystem_services_and_change_in_Syracuse_NY)
   - Best idea: Shows methodology and plots, is old and use I-tree methods
 
+- Source: Tree Value Calculator
+  - Description: It is a tool that calculate the value of a tree based on its characteristics, (value, not benefit)
+  - URL: [page](https://www.omnicalculator.com/biology/tree-age#how-to-calculate-the-age-of-a-tree)
+  - Best idea: Great for formulas, resource and explaining in detail the used methods, to check if api are available or needs to be replicated
+
 ### Technical
 
 - Source: OpenTreeMap/ otm-python-eco
@@ -108,6 +113,10 @@ MaTREEd is developed using the following datasets:
   - URL: [page](https://www.sciencedirect.com/science/article/abs/pii/S1618866717304582)
   - Best idea: Strategies to increase the resilience of California's urban forests to reduce the risk of catastrophic loss.
 
+- Source: A systematic quantitative review of urban tree benefits, costs, and assessment methods across cities in different climatic zones
+  - Description: The paper summarizes 115 original studies on urban trees and their benefits and costs.  Demonstrated tree benefits include economic, social, health, visual, and aesthetic benefits, and identified ecosystem services include carbon sequestration, air quality improvement, storm water attenuation, and energy conservation. Disservices include maintenance costs, light attenuation, infrastructure damage, and health problems. 
+  - URL: [page](https://www.sciencedirect.com/science/article/abs/pii/S1618866712000829)
+  - Best idea: General review on a lot of studies on benefits and costs on urban trees (mainly in North America)
 
 ## Code <a name="code"></a>
 
