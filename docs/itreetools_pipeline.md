@@ -6,3 +6,6 @@ pipeline for i-Tree Eco:
 4. Automated Processing: The i-Tree Eco application includes a central computing engine that automates the processing of data and applies the scientific equations to generate estimates of the forest effects. This automated processing ensures consistent and reliable calculations of environmental and economic benefits.
 5. Reports: After the model estimation is completed, i-Tree Eco provides summary reports that include charts, tables, and written reports. These reports present the estimated results of the ecosystem services and structural characteristics of the forest based on the input data and calculations performed by the model.
 6. Forecasting (Optional): i-Tree Eco also offers a forecast module that can be run after the initial model results are generated. The forecast module uses structural estimates, environmental variables, species characteristics, growth and mortality rates to project future tree diameter at breast height (DBH) and crown size. Based on these projections, benefits such as pollution removal, carbon storage, and carbon sequestration can be estimated. Additional factors such as tree planting inputs, pest and disease impacts, and storm effects can also be modeled.
+
+
+METHODS, ADVANTAGES, AND LIMITATIONS of i-Tree (https://www.itreetools.org/documents/650/i-Tree_Methods_gtr_nrs200-2021.pdf)
