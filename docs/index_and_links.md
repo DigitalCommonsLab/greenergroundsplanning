@@ -43,11 +43,19 @@ Abstract
 
 - [i-Tree](https://www.itreetools.org)
 - [i-Tree Eco](https://www.itreetools.org/it/tools/i-tree-eco)
+- [User's Manual](https://www.itreetools.org/documents/275/EcoV6_UsersManual.2021.09.22.pdf)
+- [Use of Variables by i-T ree Eco](https://www.itreetools.org/documents/81/Ecov6_data_variables_ES_relationships.pdf)
+- [Model Differences](https://www.itreetools.org/documents/264/Ecov6Guide_Differencesv5v6.pdf)
+- [i-Tree Eco Reports explained](https://www.itreetools.org/documents/33/Eco_reports_explanation.pdf)
+- [Data Limitations](https://www.itreetools.org/documents/263/DataLimitations.2020_07_15.pdf)
+- [2021 Summary of Programs and Methods](https://www.itreetools.org/documents/650/i-Tree_Methods_gtr_nrs200-2021.pdf)
+- [Databases](https://database.itreetools.org/#/viableLocations)
 
 ### Manuals
 - [ECO GUIDE TO Importing an Existing Inventory](https://www.itreetools.org/documents/267/InventoryImporter.2021.12.14.pdf)
 - [i-Tree Eco, User's Manual](https://www.itreetools.org/documents/275/EcoV6_UsersManual.2021.09.22.pdf)
 
 ### YouTube videos
+- [Channel](https://www.youtube.com/@i-TreeTools)
 - [Setting Up A Sampling Project In i-Tree Eco v6](https://www.youtube.com/watch?v=XEcdgVRTYd4&list=PLTpJ4X0F9py0KchjAnoXCvihW-SL4QHry&index=7)
 - [Importing inventory data into i-Tree Eco v6](https://www.youtube.com/watch?v=m3riZhE_uSg)
