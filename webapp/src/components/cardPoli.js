@@ -24,11 +24,6 @@ export default function CardPoli(props) {
     var [freq,setFreq] = useState('')
     var [commonSpecies,setcommonSpecies] = useState('')
     var [chart,setChart] = useState('')
-    //console.log(getTreesWithinCircoscrizione(props.propTrees,props.name,props.propCircoscrizioni))
-
-    // console.log(treesPoli)
-
-    // console.log(totalInfoTrees)
 
     useEffect(() => {
         let treesInCirc = getTreesWithinPoloSociale(props.propTrees,props.name,props.propPoliSociali).features
@@ -36,9 +31,6 @@ export default function CardPoli(props) {
 
         let freq = speciesFreq(treesInCirc)
         let commonSpecies = mostCommonSpecies(freq)
-
-        // console.log(freq)
-        // console.log(commonSpecies)
 
         let chartData = []
 
@@ -89,7 +81,7 @@ export default function CardPoli(props) {
                                 {props.name}
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 15 }} color="text.secondary">
-                                Alberi
+                                Trees
                             </Typography>
                             <Typography sx={{ fontSize: 23, textAlign : 'center', fontWeight: 'bold' }}>
                                 {treesPoli.length}

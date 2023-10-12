@@ -36,19 +36,19 @@ export default function CardPoligono(props) {
     var [commonSpecies,setcommonSpecies] = useState('')
     var [chart,setChart] = useState('')
 
-    // console.log(treesPoligono)
-
-    // console.log(totalInfoTrees)
-
     useEffect(() => {
         let treesInPoligono = getTreesWithinPoligono(props.propTrees,props.info_poligono).features
+
+        /* if(props.filter != null){
+            treesInPoligono = treesInPoligono.filter((tree) => {
+                return tree.properties[props.filter] === props.value
+            })
+        } */
+
         let totalInfo = getTotalInfoFromTrees(treesInPoligono)
 
         let freq = speciesFreq(treesInPoligono)
         let commonSpecies = mostCommonSpecies(freq)
-
-        //console.log(freq)
-        //console.log(commonSpecies)
 
         let chartData = []
 
@@ -63,7 +63,6 @@ export default function CardPoligono(props) {
         
         setFreq(freq)
         setcommonSpecies(commonSpecies)
-        //console.log(commonSpecies.length)
         setTreesPoligono(treesInPoligono)
         setTotalInfoTrees(totalInfo)
     },[])
@@ -93,7 +92,7 @@ export default function CardPoligono(props) {
                         </Grid>
                         <Grid item>
                             <Typography sx={{ fontSize: 25, textAlign : 'center', color: '#1fe54d', fontWeight: 'bold' }}>
-                                Area individuata
+                                Area
                             </Typography>
                         </Grid>
                         <Grid item sx={{marginTop : 1}}>
@@ -115,7 +114,7 @@ export default function CardPoligono(props) {
                                         justifyContent: "center",
                                     }}>
                                         <Typography sx={{textAlign : 'center', fontSize: 15 }} color="text.secondary">
-                                            Alberi
+                                            Trees
                                         </Typography>
                                         <Typography sx={{ fontSize: 23, textAlign : 'center', fontWeight: 'bold' }}>
                                             {treesPoligono.length}

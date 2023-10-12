@@ -13,9 +13,6 @@ import {GiRaining} from 'react-icons/gi'
 import {AiFillCar} from 'react-icons/ai'
 
 export default function BenefitGrid(props) {
-
-    console.log('props.totalInfo',props)
-
     const format = num => String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,')
 
     return (
@@ -69,10 +66,10 @@ export default function BenefitGrid(props) {
                                 Pollution removed
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 17, fontWeight: "bold"}} color="text.secondary">
-                                {/* {format((props.totalInfo['Pollution Removal (g/yr)']/1000.0)?.toFixed(2)) + ' kg'} */}
+                                {format((props.totalInfo['Pollution Removal (g/yr)'])?.toFixed(2)) + ' g'}
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 14}} color="text.secondary">
-                                {/* {format(props.totalInfo['Pollution Removal (eur/yr)']?.toFixed(2)) + '€'} */}
+                                {format(props.totalInfo['Pollution Removal (eur/yr)']?.toFixed(2)) + '€'}
                             </Typography>
                         </div>
                     </Grid>
@@ -92,10 +89,10 @@ export default function BenefitGrid(props) {
                                 Absorbed CO2
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 17, fontWeight: "bold"}} color="text.secondary">
-                                {/* {format(props.totalInfo['Gross Carbon Sequestration (kg/yr)']?.toFixed(2)) + ' kg'} */}
+                                {format(props.totalInfo['Gross Carbon Sequestration (kg/yr)']?.toFixed(2)) + ' kg'}
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 14}} color="text.secondary">
-                                {/* {format(props.totalInfo['Gross Carbon Sequestration (eur/yr)']?.toFixed(2)) + '€'} */}
+                                {format(props.totalInfo['Gross Carbon Sequestration (eur/yr)']?.toFixed(2)) + '€'}
                             </Typography>
                         </div>
                     </Grid>
@@ -115,10 +112,10 @@ export default function BenefitGrid(props) {
                                 Absorbed water
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 17, fontWeight: "bold"}} color="text.secondary">
-                                {/* {format((props.totalInfo['Avoided Runoff (mcube/yr)']*1000.0)?.toFixed(2)) + ' kg'} */}
+                                {format((props.totalInfo['Avoided Runoff (l/yr)'])?.toFixed(2)) + ' l'}
                             </Typography>
                             <Typography sx={{textAlign : 'center', fontSize: 14}} color="text.secondary">
-                                {/* {format(props.totalInfo['Avoided Runoff (eur/yr)']?.toFixed(2)) + '€'} */}
+                                {format(props.totalInfo['Avoided Runoff (eur/yr)']?.toFixed(2)) + '€'}
                             </Typography>
                         </div>
                     </Grid>
@@ -148,10 +145,10 @@ export default function BenefitGrid(props) {
                                     Pollution removed
                                 </Typography>
                                 <Typography sx={{textAlign : 'center', fontSize: 16, fontWeight: "bold"}} color="text.secondary">
-                                    {/* {format((props.totalInfo['Pollution Removal (g/yr)']/1000.0)?.toFixed(2)) + ' chili'} */}
+                                    {format((props.totalInfo['Pollution Removal (g/yr)'])?.toFixed(2)) + ' g'}
                                 </Typography>
                                 <Typography sx={{textAlign : 'center', fontSize: 14}} color="text.secondary">
-                                    {/* {format(props.totalInfo['Pollution Removal (eur/yr)']?.toFixed(2)) + '€'} */}
+                                    {format(props.totalInfo['Pollution Removal (eur/yr)']?.toFixed(2)) + '€'}
                                 </Typography>
                             </div>
                         </Grid>

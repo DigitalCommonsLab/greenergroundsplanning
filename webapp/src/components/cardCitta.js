@@ -15,7 +15,6 @@ import {BsFillArrowLeftSquareFill} from 'react-icons/bs'
 
 
 export default function CardCitta(props) {
-    console.log('props_card_citta',props)
     var [treesNum,setTreesNum] = useState('')
     var [freq,setFreq] = useState('')
     var [commonSpecies,setcommonSpecies] = useState('')
@@ -25,11 +24,8 @@ export default function CardCitta(props) {
 
     useEffect(() => {
         if(treesNum == '' && freq == '' && commonSpecies==''){
-            //console.log(data)
             let freq = speciesFreq(props.propTrees.features)
             let commonSpecies = mostCommonSpecies(freq)
-            
-            //console.log(props.propTrees.features)
 
             let chartData = []
 
@@ -41,8 +37,6 @@ export default function CardCitta(props) {
             })
 
             setChart(composeChart(chartData,(((Object.keys(props.propTrees.features)).length)-1),Object.keys(freq).length))
-
-            //console.log(chartData)
 
             setTreesNum((Object.keys(props.propTrees.features)).length)
             setFreq(freq)

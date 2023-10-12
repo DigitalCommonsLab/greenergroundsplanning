@@ -1,6 +1,5 @@
 //import {data} from './data/variables'
 import React from 'react';
-import {useState,useEffect} from 'react'
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -11,9 +10,7 @@ ReactGA.initialize('UA-225868624-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
-  <React.StrictMode>
-      <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 

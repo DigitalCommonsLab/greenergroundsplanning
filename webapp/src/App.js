@@ -10,7 +10,7 @@ import { Button, Link } from "@mui/material";
 import {
   fetchProps
 } from "./data/mapFunctions"
-import {Drawer } from '@mui/material';
+import { Drawer } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
@@ -19,68 +19,61 @@ import SweetAlert2 from 'react-sweetalert2';
 
 import pointsWithinPolygon from '@turf/points-within-polygon'
 
-import {BsFillArrowRightSquareFill} from 'react-icons/bs'
-import {AiFillGithub} from 'react-icons/ai'
-import {IoIosPeople} from 'react-icons/io'
-import {MdEmail} from 'react-icons/md'
+import { BsFillArrowRightSquareFill } from 'react-icons/bs'
+import { AiFillGithub } from 'react-icons/ai'
+import { IoIosPeople } from 'react-icons/io'
+import { MdEmail } from 'react-icons/md'
 
 import { CircleLoading } from 'react-loadingg';
 
 
 function App() {
-  const [cardInfo,setCardInfo] = useState({
-    name : 'citta',
-    item_name : null,
+  const [cardInfo, setCardInfo] = useState({
+    name: 'citta',
+    item_name: null,
     item_info: null
   })
 
-  const [data,setData] = useState({
-    propTrees : null,
-    propCircoscrizioni : null,
-    propPoliSociali : null,
-    totalInfoTrees : null
+  const [data, setData] = useState({
+    propTrees: null,
+    propCircoscrizioni: null,
+    propPoliSociali: null,
+    totalInfoTrees: null
   })
 
   const [swalProps, setSwalProps] = useState({});
-  const [drawerOpen,setDrawer] = useState(true)
+  const [drawerOpen, setDrawer] = useState(true)
 
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     //aspetto che vengano fetchati tutti i geojson necessari e li salvo nello stato (solo primo ciclo)
-    fetchProps().then((data) =>{
+    fetchProps().then((data) => {
       let tempTrees = data[0]
       let total = tempTrees.features.pop()
 
       let date = Date.now()
 
       data[1].features.map((item) => {
-        return item.properties.trees_within = pointsWithinPolygon(tempTrees,item).features.length
+        return item.properties.trees_within = pointsWithinPolygon(tempTrees, item).features.length
       })
 
       data[2].features.map((item) => {
-        return item.properties.trees_within = pointsWithinPolygon(tempTrees,item).features.length
+        return item.properties.trees_within = pointsWithinPolygon(tempTrees, item).features.length
       })
 
       let finishDate = Date.now()
 
-      console.log('finished processing poli and circ data in ' + (finishDate - date)/1000 + ' seconds')
-
-      // console.log(data[1])
-      // console.log(data[2])
-      console.log(total)
-
+      console.log('finished processing poli and circ data in ' + (finishDate - date) / 1000 + ' seconds')
 
       setData({
-        propTrees : data[0],
-        propCircoscrizioni : data[1],
-        propPoliSociali : data[2],
-        totalInfoTrees : total.properties
+        propTrees: data[0],
+        propCircoscrizioni: data[1],
+        propPoliSociali: data[2],
+        totalInfoTrees: total.properties
       })
     })
-  },[])
+  }, [])
 
-  //console.log(cardInfo)
-  
   //fuinzione passata al componente figlio 'map', che cambia lo stato di app (questo component), che permette di capire quale layer si e' cliccato e le sue informazioni, e di conseguenza estrarne le informazioni. 
   function changeCardInfo(info) {
     setCardInfo(info)
@@ -90,7 +83,7 @@ function App() {
     setDrawer(!drawerOpen)
   }
 
-  function showAbout(){
+  function showAbout() {
     setSwalProps({
       show: true,
       didClose: () => {
@@ -100,27 +93,28 @@ function App() {
   }
 
 
-  if(data.propTrees===null)
+  if (data.propTrees === null) {
     return (
-      <div style = {{textAlign: 'center', position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}> 
+      <div style={{ textAlign: 'center', position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
         <CircleLoading />
-        <Typography sx={{textAlign : 'center', fontSize: 17, marginTop: 10}} color="text.secondary">
+        <Typography sx={{ textAlign: 'center', fontSize: 17, marginTop: 10 }} color="text.secondary">
           The page is loading...
         </Typography>
       </div>
     )
-  else return(
-    <React.Fragment>
+  } else {
+    return (
+      <React.Fragment>
         <Drawer
           anchor='left'
           open={drawerOpen}
           // overflowY= 'scroll'
-          sx = {{
+          sx={{
             position: "relative",
             zIndex: 'initial',
             overflowY: 'auto',
             boxSizing: 'content-box',
-            '& .MuiDrawer-paper' : {
+            '& .MuiDrawer-paper': {
               scrollBehavior: 'smooth',
               scrollbarWidth: 'none',
               backgroundColor: '#fff0',
@@ -129,20 +123,19 @@ function App() {
             },
           }}
         >
-          {data.propTrees===null ? null : 
-            cardInfo.name==='citta' ? <CardCitta drawerOpen={drawerOpen} setDrawerOpen={setDrawer} propTrees={data.propTrees} totalInfo={data.totalInfoTrees}/> :
-            cardInfo.name==='poli' ? <CardPoli drawerOpen={drawerOpen} setDrawerOpen={setDrawer} name={cardInfo.item_name} propTrees={data.propTrees} propPoliSociali={data.propPoliSociali}/> : 
-            cardInfo.name==='circoscrizioni' ? <CardCirc drawerOpen={drawerOpen} setDrawerOpen={setDrawer} name={cardInfo.item_name} propTrees={data.propTrees} propCircoscrizioni={data.propCircoscrizioni}/> : 
-            cardInfo.name==='albero' ? <CardAlbero drawerOpen={drawerOpen} setDrawerOpen={setDrawer} name={cardInfo.item_info.Name} propTree={cardInfo.item_info}/> : 
-            cardInfo.name === 'poligono' ? <CardPoligono drawerOpen={drawerOpen} setDrawerOpen={setDrawer} info_poligono={cardInfo.item_info.features[0]} propTrees={data.propTrees}/> : null
+          {data.propTrees !== null && (
+            cardInfo.name === 'citta' ? <CardCitta drawerOpen={drawerOpen} setDrawerOpen={setDrawer} propTrees={data.propTrees} totalInfo={data.totalInfoTrees} /> :
+              cardInfo.name === 'poli' ? <CardPoli drawerOpen={drawerOpen} setDrawerOpen={setDrawer} name={cardInfo.item_name} propTrees={data.propTrees} propPoliSociali={data.propPoliSociali} /> :
+                cardInfo.name === 'circoscrizioni' ? <CardCirc drawerOpen={drawerOpen} setDrawerOpen={setDrawer} name={cardInfo.item_name} propTrees={data.propTrees} propCircoscrizioni={data.propCircoscrizioni} /> :
+                  cardInfo.name === 'albero' ? <CardAlbero drawerOpen={drawerOpen} setDrawerOpen={setDrawer} name={cardInfo.item_info.Name} propTree={cardInfo.item_info} /> :
+                    cardInfo.name === 'poligono' ? <CardPoligono drawerOpen={drawerOpen} setDrawerOpen={setDrawer} info_poligono={cardInfo.item_info.features[0]} propTrees={data.propTrees} /> : null
+          )
           }
         </Drawer>
-      {/* </div> */}
-        {/* Al primo render non abbiamo i dati fetchati, quindi al primo ciclo ritorniamo null. */}
-        {data.propTrees===null ? null : 
-          <Map setDrawer={setDrawer} setCardInfo={changeCardInfo} propTrees={data.propTrees} propCircoscrizioni={data.propCircoscrizioni} propPoliSociali={data.propPoliSociali}/>
-        }
-        { drawerOpen ? null : 
+        
+        <Map setDrawer={setDrawer} setCardInfo={changeCardInfo} propTrees={data.propTrees} propCircoscrizioni={data.propCircoscrizioni} propPoliSociali={data.propPoliSociali} />
+
+        {drawerOpen ? null :
           <div style={{
             position: "absolute",
             left: 0,
@@ -153,18 +146,18 @@ function App() {
             alignItems: "center",
             justifyContent: "center",
           }}>
-            <BsFillArrowRightSquareFill onClick={onClick} size={30}/>
-            <Typography sx={{textAlign : 'center', fontSize: 17, fontWeight: 'bold'}} color="text.primary">
-                Info
+            <BsFillArrowRightSquareFill onClick={onClick} size={30} />
+            <Typography sx={{ textAlign: 'center', fontSize: 17, fontWeight: 'bold' }} color="text.primary">
+              Info
             </Typography>
           </div>
         }
-        <Button variant="contained" onClick={showAbout} startIcon={<IoIosPeople />} 
+        <Button variant="contained" onClick={showAbout} startIcon={<IoIosPeople />}
           sx={{
             position: "absolute",
-            backgroundColor:'#42dd57b8',
+            backgroundColor: '#42dd57b8',
             "&:hover": {
-                backgroundColor: "#30db47e6",
+              backgroundColor: "#30db47e6",
             },
             right: 0,
             bottom: 0,
@@ -174,93 +167,59 @@ function App() {
           About
         </Button>
         <SweetAlert2 {...swalProps}>
-            <Typography variant='h5'>
-              Tree Map of Bologna
-            </Typography>
-            <Divider flexItem sx={{marginTop : 1}}/>
-            <Typography fontSize={14} marginTop={1}>
-              The map shows a part of the trees managed by the Municipality of Bologna.
-            </Typography>
-            <Typography fontSize={14} marginTop={1}>
-              The data are taken from the open data portal of the Municipality of Bologna and are updated to 2023.
-            </Typography>
-            <Typography fontSize={14} marginTop={1}>
-              The Eco-Benefit is calculated using the platform
-            </Typography>
-            <Typography fontSize={16} fontWeight="bold">
-              <Link target="_blank" href="https://www.itreetools.org/tools/i-tree-eco" underline="hover">
-                i-Tree Eco
-              </Link>
-            </Typography>
-            <Typography fontSize={14} marginTop={1}>
-              The map was created by
-            </Typography>
-            <Typography fontSize={18} fontWeight="bold" color='#0bff2a'>
-              Luca Maccacaro
-            </Typography>
-            <Typography fontSize={14}>
-              under the supervision of&nbsp;
-                <Link target="_blank" href="https://twitter.com/napo" underline="hover">
-                  Maurizio Napolitano
-                </Link> 
-              &nbsp; during the thesis project at&nbsp;
-                <Link target="_blank" href="https://www.unitn.it/" underline="hover">
-                  Univestità degli Studi di Trento
-                </Link>
-              .
-            </Typography>
-            {/* <Typography fontSize={14}>
-              per lo stage formativo di
-                <Link target="_blank" href="https://www.unitn.it/" underline="hover" color='green'>
-                  <b> UniTN </b>
-                </Link>
-                presso
-                <Link target="_blank" href="https://www.fbk.eu/it/" underline="hover" color='green'>
-                  <b> Fondazione Bruno Kessler</b>
-                </Link>
-            </Typography> */}
-            <Typography fontSize={14} marginTop={2}>
-              For details and contacts:
-            </Typography>
-            <Grid
+          <Typography variant='h5'>
+            Tree Map of Bologna
+          </Typography>
+          <Divider flexItem sx={{ marginTop: 1 }} />
+          <Typography fontSize={14} marginTop={1}>
+            The map shows a part of the trees managed by the Municipality of Bologna.
+          </Typography>
+          <Typography fontSize={14} marginTop={1}>
+            The data are taken from the open data portal of the Municipality of Bologna and are updated to 2023.
+          </Typography>
+          <Typography fontSize={14} marginTop={1}>
+            The Eco-Benefit is calculated using the platform
+          </Typography>
+          <Typography fontSize={16} fontWeight="bold">
+            <Link target="_blank" href="https://www.itreetools.org/tools/i-tree-eco" underline="hover">
+              i-Tree Eco
+            </Link>
+          </Typography>
+          <Typography fontSize={14} marginTop={1}>
+            The map was created by
+          </Typography>
+          <Typography fontSize={18} fontWeight="bold" color='#0bff2a'>
+            Luca Maccacaro
+          </Typography>
+          <Typography fontSize={14}>
+            under the supervision of&nbsp;
+            <Link target="_blank" href="https://twitter.com/napo" underline="hover">
+              Maurizio Napolitano
+            </Link>
+            &nbsp; during the thesis project at&nbsp;
+            <Link target="_blank" href="https://www.unitn.it/" underline="hover">
+              Univestità degli Studi di Trento
+            </Link>
+            .
+          </Typography>
+          <Typography fontSize={14} marginTop={2}>
+            For details and contacts:
+          </Typography>
+          <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+          >
+            <Grid item sx={{ marginTop: 1 }}>
+              <Grid
                 container
-                direction="column"
-                justifyContent="flex-start"
-            >
-              <Grid item sx={{marginTop : 1}}>
-                  <Grid
-                      container
-                      display='flex'
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="stretch"
-                  >
-                      <Grid item >
-                          <div style={{
-                              position: "relative",
-                              left: 0,
-                              top: 0,
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                          }}>
-                              <AiFillGithub size={25}/>
-                              <Typography sx={{textAlign : 'center', fontSize: 13 }} color="text.secondary">
-                                  Github
-                              </Typography>
-                              <Typography sx={{ fontSize: 15, textAlign : 'center'}}>
-                                <Link target="_blank" href="https://github.com/DigitalCommonsLab/greenergroundsplanning">
-                                  Repository
-                                </Link>
-                              </Typography>
-                          </div>
-                      </Grid>
-                  </Grid>
-              </Grid>
-              <Divider flexItem sx={{marginTop : 1, marginRight : 10, marginLeft : 10}}/>
-              <Grid item sx={{marginTop : 1}}>
-                <div style={{
+                display='flex'
+                direction="row"
+                justifyContent="center"
+                alignItems="stretch"
+              >
+                <Grid item >
+                  <div style={{
                     position: "relative",
                     left: 0,
                     top: 0,
@@ -268,25 +227,50 @@ function App() {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                }}>
-                    <MdEmail size={25}/>
-                    <Typography sx={{textAlign : 'center', fontSize: 13 }} color="text.secondary">
-                        E-Mail
+                  }}>
+                    <AiFillGithub size={25} />
+                    <Typography sx={{ textAlign: 'center', fontSize: 13 }} color="text.secondary">
+                      Github
                     </Typography>
-                    <Typography sx={{ fontSize: 16, textAlign : 'center'}}>
-                      <Link target="_blank" href="mailto:luca.maccacaro@studenti.unitn.it">
-                        luca.maccacaro@studenti.unitn.it
+                    <Typography sx={{ fontSize: 15, textAlign: 'center' }}>
+                      <Link target="_blank" href="https://github.com/DigitalCommonsLab/greenergroundsplanning">
+                        Repository
                       </Link>
                     </Typography>
-                </div>
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
+            <Divider flexItem sx={{ marginTop: 1, marginRight: 10, marginLeft: 10 }} />
+            <Grid item sx={{ marginTop: 1 }}>
+              <div style={{
+                position: "relative",
+                left: 0,
+                top: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+                <MdEmail size={25} />
+                <Typography sx={{ textAlign: 'center', fontSize: 13 }} color="text.secondary">
+                  E-Mail
+                </Typography>
+                <Typography sx={{ fontSize: 16, textAlign: 'center' }}>
+                  <Link target="_blank" href="mailto:luca.maccacaro@studenti.unitn.it">
+                    luca.maccacaro@studenti.unitn.it
+                  </Link>
+                </Typography>
+              </div>
+            </Grid>
+          </Grid>
           <Typography fontSize={14} marginTop={1}>
             This software is released under the MIT license.
           </Typography>
         </SweetAlert2>
-    </React.Fragment>
-  )
+      </React.Fragment>
+    )
+  }
 }
 
 export default App;

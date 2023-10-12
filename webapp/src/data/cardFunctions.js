@@ -10,12 +10,6 @@ const searchURL = 'https://it.wikipedia.org/wiki/'
 //ritorna una featurecollection con tutti gli alberi all' interno del poligono che passiamo, con anche i dati del poligono stesso.
 export function getTreesWithinCircoscrizione(trees,name,circoscrizioni){
     let area = circoscrizioni.features.filter(item => item.properties.nome === name)
-    //console.log(trees)
-
-    //rimuovo l'ultimo element in quanto rappresenta il totale di tutti i dati degli alberi e non e' prettamente un punto.
-    //trees.features.pop()
-
-    //console.log(area[0])
     
     return pointsWithinPolygon(trees,area[0])
 }
@@ -30,9 +24,6 @@ export function getTreesWithinPoloSociale(trees,name,polo){
 }
 
 export function getTreesWithinPoligono(trees,coord_poligono){
-    // console.log(trees)
-    // console.log(coord_poligono)
-    // console.log(pointsWithinPolygon(trees,coord_poligono))
     return pointsWithinPolygon(trees,coord_poligono)
 }
 
@@ -43,7 +34,7 @@ export function getTotalInfoFromTrees(trees){
         "Carbon Storage (eur)": 0.0,
         "Gross Carbon Sequestration (kg/yr)": 0.0,
         "Gross Carbon Sequestration (eur/yr)": 0.0,
-        "Avoided Runoff (mcube/yr)": 0.0,
+        "Avoided Runoff (l/yr)": 0.0,
         "Avoided Runoff (eur/yr)": 0.0,
         "Pollution Removal (g/yr)": 0.0,
         "Pollution Removal (eur/yr)": 0.0,
@@ -93,7 +84,6 @@ export function openWindow(e) {
 const CustomTooltip = importData => {
     // payload[0] doesn't exist when tooltip isn't visible
     if (importData?.payload[0] != null) {
-        //console.log(importData)
         // mutating props directly is against react's conventions
         // so we create a new payload with the name and value fields set to what we want
         const newPayload = [
@@ -109,9 +99,6 @@ const CustomTooltip = importData => {
 };
 
 export function composeChart(data,totalNum,speciesNum){
-    console.log('speciesNum',speciesNum)
-    console.log('totalNum',totalNum)
-    console.log('data',data)
 
     let num = 0;
     let max = 0
@@ -143,7 +130,6 @@ export function composeChart(data,totalNum,speciesNum){
                     <Tooltip content={<CustomTooltip num={totalNum}/>}/>
                     <Bar dataKey="amount" fill="#1fa141" barSize={26}>
                     {data.map((entry, index) => {
-                        //console.log(entry.amount/max)
                         return (
                             <Cell cursor="pointer" fillOpacity={
                                 (entry.amount/max) > 0.2 ? (entry.amount/max) : 0.2
