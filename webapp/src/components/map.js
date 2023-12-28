@@ -11,6 +11,7 @@ import {
     getFullItemFromPoloSociale,
 } from "../data/mapFunctions.js"
 
+import { COLOR_TREES_CONFIG } from "../components/treesColor.config.js"
 
 var hoveredCircoscrizioniId = null;
 var hoveredPoliId = null;
@@ -36,6 +37,8 @@ export default function Map(props) {
     const [lat] = useState(44.4949);
     const [API_KEY] = useState("trl1hRCUkVCSDvXlaqFz");
 
+    console.log('props', props)
+
     var zoom
     var minZoom
     var drawRemoved = 1
@@ -51,6 +54,105 @@ export default function Map(props) {
     const propCircoscrizioni = props.propCircoscrizioni;
     const propPoliSociali = props.propPoliSociali
     const propTrees = props.propTrees
+    const propPredictions = props.propPredictions
+
+    console.log('propTrees', propTrees)
+    console.log('propPredictions', propPredictions)
+
+    /* const initializeMap_1 = () => {
+        if (map.current) return;
+
+        map.current = new maplibregl.Map({
+            container: mapContainer.current,
+            style: `https://api.maptiler.com/maps/streets/style.json?key=${API_KEY}`,
+            vectorTiles: true,
+            sourceLayer: "geo_data_trees",
+            center: [lng, lat],
+            zoom: zoom,
+            maxZoom: 20,
+            trackResize: true,
+            minZoom: minZoom,
+            attributionControl: false
+        });
+
+        map.current.getCanvas().style.cursor = "";
+
+       
+
+        map.current.on("load", function (e) {
+
+            map.current.addSource('some_1', {
+                type: 'vector',
+                url: 'https://api.maptiler.com/tiles/db07287c-d9d5-4301-bfec-13de112cf89a/tiles.json?key=889AkOUJC5WPzxdpH3zr'
+            });
+
+            map.current.addSource("Trees", {
+                type: "geojson",
+                data: propTrees,
+                generateId: true
+            });
+
+            map.current.addLayer('TreesLayer',{
+                id: "TreesLayer",
+                type: "circle",
+                source: "Trees",
+                minzoom: 15.2,
+                paint: {
+                    "circle-color": 'green',
+                    "circle-radius": [
+                        "interpolate", ["linear"], ["zoom"],
+                        15.2, [
+                            'interpolate', ['linear'], ["to-number", ['get', 'DBH (cm)']],
+                            7, 1.5,
+                            90, 4.0,
+                        ],
+                        19.5, [
+                            'interpolate', ['linear'], ["to-number", ['get', 'DBH (cm)']],
+                            7, 10,
+                            90, 30,
+                        ],
+                    ],
+                    "circle-opacity": 0.6,
+                },
+            });
+
+            map.current.addLayer('PredictionsLayer',{
+                id: "PredictionsLayer",
+                type: "circle",
+                paint: {
+                    "circle-color": 'green',
+                    "circle-radius": [
+                        "interpolate", ["linear"], ["zoom"],
+                        15.2, [
+                            'interpolate', ['linear'], ["to-number", ['get', 'DBH (cm)']],
+                            7, 1.5,
+                            90, 4.0,
+                        ],
+                        19.5, [
+                            'interpolate', ['linear'], ["to-number", ['get', 'DBH (cm)']],
+                            7, 10,
+                            90, 30,
+                        ],
+                    ],
+                    "circle-opacity": 0.6,
+                },
+            });
+
+            map.current.addLayer({
+                id:'sourceLayer',
+                type:'fill',
+                source:'some_1',
+                'source-layer': 'contour',
+                //'source-layer':'PredictionsLayer',
+                paint:{
+                    'fill-color':'red',
+                    'fill-opacity':0.5
+                }
+            })
+
+        });
+
+    } */
 
     const initializeMap = () => {
         if (map.current) return;
@@ -73,6 +175,8 @@ export default function Map(props) {
         map.current = new maplibregl.Map({
             container: mapContainer.current,
             style: `https://api.maptiler.com/maps/streets/style.json?key=${API_KEY}`,
+            vectorTiles: true,
+            sourceLayer: "geo_data_trees",
             center: [lng, lat],
             zoom: zoom,
             maxZoom: 20,
@@ -84,19 +188,6 @@ export default function Map(props) {
         map.current.getCanvas().style.cursor = "";
 
         map.current.on("load", function (e) {
-            //SOURCE per vector alberi
-            /* map.current.addSource("Trees", {
-                type: "vector",
-                tiles: [window.location.origin + "/pbf/{z}/{x}/{y}.pbf"],
-            }); */
-            // Load the MBTiles file
-            map.current.addSource('Mbtiles', {
-                type: 'vector',
-                url: '/out.mbtiles'
-            });
-
-            // Add the layer to the map
-            //map.current.addLayer('my-layer');
 
             map.current.addSource("Trees", {
                 type: "geojson",
@@ -104,17 +195,10 @@ export default function Map(props) {
                 generateId: true
             });
 
-            map.current.addLayer({
-                id: 'CustomLayer',
-                type: 'circle',
-                source: {
-                    type: 'vector',
-                    url: '/out.mbtiles'
-                },
-                paint: {
-                    'circle-radius': 5,
-                    'circle-color': '#ff0000'
-                }
+            map.current.addSource("Predictions", {
+                type: "geojson",
+                data: propPredictions,
+                generateId: true
             });
 
             //SOURCE per poli sociali
@@ -143,24 +227,6 @@ export default function Map(props) {
                 generateId: true
             })
 
-            //AGGIUNTA di layers a cascata per vector alberi, poli sociali e circoscrizioni e i rispettivi labels.
-            // I layers di poli_sociali e circoscrizioni hanno minzoom e maxzoom in modo tale da essere scambiati quando si raggiunge il livello di zoom 13
-
-            //PBFs
-            // map.current.addLayer({
-            //     id: "TreesLayer",
-            //     type: "circle",
-            //     source: "Trees",
-            //     "source-layer": "geo_data_trees",
-            //     minzoom: 14,
-            //     maxzoom: 21,
-            //     paint: {
-            //         "circle-color": "green",
-            //         "circle-radius": 8,
-            //         "circle-opacity": 0.6,
-            //     },
-            // });
-
             //TODO : special color for each species
             /* let speciesColor = [
                 'match',
@@ -182,7 +248,11 @@ export default function Map(props) {
                 source: "Trees",
                 minzoom: 15.2,
                 paint: {
-                    "circle-color": 'green',
+                    // we want to color the tree based on the species (Name)
+                    "circle-color": COLOR_TREES_CONFIG,
+                    /* "circle-color": [
+                        ['get', 'Name']
+                    ], // 'green' */
                     "circle-radius": [
                         "interpolate", ["linear"], ["zoom"],
                         15.2, [
@@ -196,6 +266,17 @@ export default function Map(props) {
                             90, 30,
                         ],
                     ],
+                    "circle-opacity": 0.6,
+                },
+            });
+
+            map.current.addLayer({
+                id: "PredictionsLayer",
+                type: "circle",
+                source: "Predictions",
+                paint: {
+                    "circle-color": 'red',
+                    "circle-radius": 7,
                     "circle-opacity": 0.6,
                 },
             });
@@ -411,6 +492,34 @@ export default function Map(props) {
                 "</div>"
             ).addTo(map.current);
 
+        });
+
+        map.current.on("mouseover", "PredictionsLayer", (e) => {
+            // Get the current zoom level
+            let zoom = map.current.getZoom();
+
+            // Check if the zoom level is greater than or equal to your desired zoom level
+            if (zoom >= 15.2) {
+                e.preventDefault();
+                map.current.getCanvas().style.cursor = "pointer";
+                // Populate the popup and set its coordinates based on the feature.
+                let features = e.features[0];
+                //console.log(e.features[0])
+                if (popUpIsOpen) {
+                    try {
+                        popup.remove()
+                    } catch (e) {
+                        console.log('Error closing popup')
+                    }
+                }
+
+                popUpIsOpen = true
+                popup.setLngLat(features.geometry.coordinates).setHTML(
+                    "<div>" +
+                    '<b>' + features.properties.tree + '</b>' +
+                    "</div>"
+                ).addTo(map.current);
+            }
         });
 
         map.current.on("mouseleave", "TreesLayer", (e) => {

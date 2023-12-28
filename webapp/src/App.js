@@ -38,6 +38,7 @@ function App() {
     propTrees: null,
     propCircoscrizioni: null,
     propPoliSociali: null,
+    propPredictions: null,
     totalInfoTrees: null
   })
 
@@ -53,22 +54,28 @@ function App() {
 
       let date = Date.now()
 
-      data[1].features.map((item) => {
+      /* data[1].features.map((item) => {
         return item.properties.trees_within = pointsWithinPolygon(tempTrees, item).features.length
       })
 
       data[2].features.map((item) => {
         return item.properties.trees_within = pointsWithinPolygon(tempTrees, item).features.length
-      })
+      }) */
 
       let finishDate = Date.now()
 
       console.log('finished processing poli and circ data in ' + (finishDate - date) / 1000 + ' seconds')
 
+      console.log('data[1].features', data[0])
+      console.log('data[1].features', data[1])
+      console.log('data[2].features', data[2])
+      console.log('data[3].features', data[3])     
+
       setData({
         propTrees: data[0],
         propCircoscrizioni: data[1],
         propPoliSociali: data[2],
+        propPredictions: data[3],
         totalInfoTrees: total.properties
       })
     })
@@ -133,7 +140,7 @@ function App() {
           }
         </Drawer>
         
-        <Map setDrawer={setDrawer} setCardInfo={changeCardInfo} propTrees={data.propTrees} propCircoscrizioni={data.propCircoscrizioni} propPoliSociali={data.propPoliSociali} />
+        <Map setDrawer={setDrawer} setCardInfo={changeCardInfo} propTrees={data.propTrees} propCircoscrizioni={data.propCircoscrizioni} propPoliSociali={data.propPoliSociali} propPredictions={data.propPredictions} />
 
         {drawerOpen ? null :
           <div style={{
