@@ -64,12 +64,7 @@ function App() {
 
       let finishDate = Date.now()
 
-      console.log('finished processing poli and circ data in ' + (finishDate - date) / 1000 + ' seconds')
-
-      console.log('data[1].features', data[0])
-      console.log('data[1].features', data[1])
-      console.log('data[2].features', data[2])
-      console.log('data[3].features', data[3])     
+      console.log('finished processing poli and circ data in ' + (finishDate - date) / 1000 + ' seconds') 
 
       setData({
         propTrees: data[0],

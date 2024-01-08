@@ -92,7 +92,7 @@ export default function CardAlbero(props) {
                                         }}>
                                             <MdNaturePeople size={25} />
                                             <Typography sx={{ textAlign: 'center', fontSize: 14 }} color="text.secondary">
-                                                Altezza
+                                                Height
                                             </Typography>
                                             <Typography sx={{ textAlign: 'center', fontSize: 16, fontWeight: "bold" }} color="text.secondary">
                                                 {treesInfo['Height (m)'] + ' m'}
@@ -112,7 +112,7 @@ export default function CardAlbero(props) {
                                         }}>
                                             <AiOutlineColumnWidth size={25} />
                                             <Typography sx={{ textAlign: 'center', fontSize: 14 }} color="text.secondary">
-                                                Diam. tronco
+                                                Trunk diameter
                                             </Typography>
                                             <Typography sx={{ textAlign: 'center', fontSize: 16, fontWeight: "bold" }} color="text.secondary">
                                                 {format(treesInfo['DBH (cm)']?.toFixed(2)) + ' cm'}
@@ -132,7 +132,7 @@ export default function CardAlbero(props) {
                                         }}>
                                             <BsTreeFill size={25} />
                                             <Typography sx={{ textAlign: 'center', fontSize: 14 }} color="text.secondary">
-                                                Diam. chioma
+                                                Crown diameter
                                             </Typography>
                                             <Typography sx={{ textAlign: 'center', fontSize: 16, fontWeight: "bold" }} color="text.secondary">
                                             {format(treesInfo['Crown Width (m)']?.toFixed(2)) + ' m'}
@@ -161,7 +161,7 @@ export default function CardAlbero(props) {
                                         }}>
                                             <RiScalesFill size={25} />
                                             <Typography sx={{ textAlign: 'center', fontSize: 14 }} color="text.secondary">
-                                                Peso foglie
+                                                Leaf weight
                                             </Typography>
                                             <Typography sx={{ textAlign: 'center', fontSize: 16, fontWeight: "bold" }} color="text.secondary">
                                                 {treesInfo['Leaf Biomass (kg)'] + ' kg'}
@@ -181,7 +181,7 @@ export default function CardAlbero(props) {
                                         }}>
                                             <BiArea size={25} />
                                             <Typography sx={{ textAlign: 'center', fontSize: 14 }} color="text.secondary">
-                                                Area foglie
+                                                Leaf area
                                             </Typography>
                                             <Typography sx={{ textAlign: 'center', fontSize: 16, fontWeight: "bold" }} color="text.secondary">
                                                 {treesInfo['Leaf Area (m2)'] + ' m²'}
@@ -201,7 +201,7 @@ export default function CardAlbero(props) {
                                         }}>
                                             <SiOxygen size={25} />
                                             <Typography sx={{ textAlign: 'center', fontSize: 14 }} color="text.secondary">
-                                                Prod. Ossigeno
+                                                Oxygen production
                                             </Typography>
                                             <Typography sx={{ textAlign: 'center', fontSize: 16, fontWeight: "bold" }} color="text.secondary">
                                                 {treesInfo['Oxygen Production (kg/yr)'] + ' kg/anno'}
