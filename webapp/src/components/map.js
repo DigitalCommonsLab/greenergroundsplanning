@@ -516,8 +516,11 @@ export default function Map(props) {
                 popUpIsOpen = true
                 popup.setLngLat(features.geometry.coordinates).setHTML(
                     "<div>" +
-                    '<b>' + features.properties.tree + '</b>' +
-                    "</div>"
+                    '<p><b>Species:</b> ' + features.properties.tree + '</p>' +
+                    "</div>" + 
+                    "<div>" +
+                    '<p><b>Predicted benefit:</b> ' + parseFloat(features.properties.benefit).toFixed(2) + '€</p>' +
+                    "</div>" 
                 ).addTo(map.current);
             }
         });

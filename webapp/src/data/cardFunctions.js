@@ -1,33 +1,33 @@
 import React from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, /* CartesianGrid, */ Tooltip, /* Legend, */ ResponsiveContainer } from 'recharts';
 import pointsWithinPolygon from '@turf/points-within-polygon'
-import {DefaultTooltipContent} from 'recharts/lib/component/DefaultTooltipContent';
+import { DefaultTooltipContent } from 'recharts/lib/component/DefaultTooltipContent';
 import Typography from '@mui/material/Typography';
 
 
 const searchURL = 'https://it.wikipedia.org/wiki/'
 
 //ritorna una featurecollection con tutti gli alberi all' interno del poligono che passiamo, con anche i dati del poligono stesso.
-export function getTreesWithinCircoscrizione(trees,name,circoscrizioni){
+export function getTreesWithinCircoscrizione(trees, name, circoscrizioni) {
     let area = circoscrizioni.features.filter(item => item.properties.nome === name)
-    
-    return pointsWithinPolygon(trees,area[0])
+
+    return pointsWithinPolygon(trees, area[0])
 }
 
-export function getTreesWithinPoloSociale(trees,name,polo){
+export function getTreesWithinPoloSociale(trees, name, polo) {
     let area = polo.features.filter(item => item.properties.nome_quart === name)
-    
+
     //rimuovo l'ultimo element in quanto rappresenta il totale di tutti i dati degli alberi e non e' prettamente un punto.
     //trees.features.pop()
 
-    return pointsWithinPolygon(trees,area[0])
+    return pointsWithinPolygon(trees, area[0])
 }
 
-export function getTreesWithinPoligono(trees,coord_poligono){
-    return pointsWithinPolygon(trees,coord_poligono)
+export function getTreesWithinPoligono(trees, coord_poligono) {
+    return pointsWithinPolygon(trees, coord_poligono)
 }
 
-export function getTotalInfoFromTrees(trees){
+export function getTotalInfoFromTrees(trees) {
     let total = {
         "Replacement Value (eur)": 0.0,
         "Carbon Storage (kg)": 0.0,
@@ -46,9 +46,9 @@ export function getTotalInfoFromTrees(trees){
     }
     trees.map((item) => {
         let key = 0
-        for (key in total){
+        for (key in total) {
             // print the ones that are Nan
-            if(!isNaN(parseFloat(item.properties[key]))){
+            if (!isNaN(parseFloat(item.properties[key]))) {
                 total[key] += parseFloat(item.properties[key])
             }
         }
@@ -61,7 +61,7 @@ export function getTotalInfoFromTrees(trees){
 export function speciesFreq(data) {
     var freq = {};
     data.map((e) => {
-        if(freq[e.properties.Name] === undefined){
+        if (freq[e.properties.Name] === undefined) {
             freq[e.properties.Name] = 1
         } else {
             freq[e.properties.Name] += 1
@@ -91,26 +91,26 @@ const CustomTooltip = importData => {
                 value: importData.payload[0].payload.amount + ' di ' + importData.num,
             },
         ];
-      // we render the default, but with our overridden payload
-      return <DefaultTooltipContent {...importData} payload={newPayload} />;
+        // we render the default, but with our overridden payload
+        return <DefaultTooltipContent {...importData} payload={newPayload} />;
     }
     // we just render the default
     return <DefaultTooltipContent {...importData} />;
 };
 
-export function composeChart(data,totalNum,speciesNum){
+export function composeChart(data, totalNum, speciesNum) {
 
     let num = 0;
     let max = 0
     data.map((item) => {
         num = num + item.amount
-        if(item.amount > max)
+        if (item.amount > max)
             max = item.amount
         return 0
     })
     return (
         <React.Fragment>
-            <Typography sx={{textAlign : 'center', fontSize: 18, fontWeight: 'bold'}} color="text.primary">
+            <Typography sx={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }} color="text.primary">
                 Most common species
             </Typography>
             <ResponsiveContainer width='100%' height={235}>
@@ -125,21 +125,21 @@ export function composeChart(data,totalNum,speciesNum){
                     }}
                     onClick={openWindow}
                 >
-                    <YAxis type="category" dataKey="name" wrapperStyle={{whiteSpace:"break-spaces"}}/>
-                    <XAxis type="number" allowDecimals={false}/>
-                    <Tooltip content={<CustomTooltip num={totalNum}/>}/>
+                    <YAxis type="category" dataKey="name" wrapperStyle={{ whiteSpace: "break-spaces" }} />
+                    <XAxis type="number" allowDecimals={false} />
+                    <Tooltip content={<CustomTooltip num={totalNum} />} />
                     <Bar dataKey="amount" fill="#1fa141" barSize={26}>
-                    {data.map((entry, index) => {
-                        return (
-                            <Cell cursor="pointer" fillOpacity={
-                                (entry.amount/max) > 0.2 ? (entry.amount/max) : 0.2
-                            } fill={'#82ca9d'} key={`cell-${index}`} />
-                        )
-                    })}
+                        {data.map((entry, index) => {
+                            return (
+                                <Cell cursor="pointer" fillOpacity={
+                                    (entry.amount / max) > 0.2 ? (entry.amount / max) : 0.2
+                                } fill={'#82ca9d'} key={`cell-${index}`} />
+                            )
+                        })}
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>
-            <Typography sx={{textAlign : 'center', fontSize: 13 }} color="text.secondary">
+            <Typography sx={{ textAlign: 'center', fontSize: 13 }} color="text.secondary">
                 number of different species: <b>{speciesNum}</b>
             </Typography>
         </React.Fragment>
