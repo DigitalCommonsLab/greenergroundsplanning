@@ -182,6 +182,9 @@ function App() {
           <Typography fontSize={14} marginTop={1}>
             The Eco-Benefit is calculated using the platform
           </Typography>
+          <Typography fontSize={14} marginTop={1} color={'red'}>
+            Red dots are rappresenting the proposed trees to be planted and the potential ecobenefit that they could bring.
+          </Typography>
           <Typography fontSize={16} fontWeight="bold">
             <Link target="_blank" href="https://www.itreetools.org/tools/i-tree-eco" underline="hover">
               i-Tree Eco
